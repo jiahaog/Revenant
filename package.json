@@ -4,7 +4,7 @@
   "description": "High level PhantomJS functions to make life easier",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --reporter spec"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,9 @@
     "async": "^1.4.2",
     "chance": "^0.7.6",
     "phantom": "^0.7.2"
+  },
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "mocha": "^2.2.5"
   }
 }
