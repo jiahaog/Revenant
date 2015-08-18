@@ -1,0 +1,24 @@
+{
+  "name": "phantom-high",
+  "version": "0.1.0",
+  "description": "High level PhantomJS functions to make life easier",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/skewedlines/PhantomHigh.git"
+  },
+  "author": "Jia Hao",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/skewedlines/PhantomHigh/issues"
+  },
+  "homepage": "https://github.com/skewedlines/PhantomHigh#readme",
+  "dependencies": {
+    "async": "^1.4.2",
+    "chance": "^0.7.6",
+    "phantom": "^0.7.2"
+  }
+}
