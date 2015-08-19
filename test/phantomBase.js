@@ -47,7 +47,10 @@ describe('Testing PhantomHigh Object', function () {
         async.each(testUrls, function (testUrl, callback) {
 
             var browser = new PhantomHigh();
-            browser.openPage(testUrl, callback);
+            browser.openPage(testUrl, function (error) {
+                browser.done();
+                callback(error);
+            });
 
         }, function (error) {
             assert.notOk(error, 'No error should be received when opening a valid page.');
@@ -60,6 +63,11 @@ describe('Testing PhantomHigh Object', function () {
         var url = testUrls[0];
         browser.openPage(url);
         browser.takeSnapshot(function (error, result) {
+            assert.include(result, '</html>', 'Snapshot results contain closing </html> tag');
+            browser.done();
+            done(error);
+        });
+    });
 
             assert.include(result, '</html>', 'Snapshot results contain closing </html> tag');
             done(error);
