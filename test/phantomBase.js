@@ -69,10 +69,15 @@ describe('Testing PhantomHigh Object', function () {
         });
     });
 
+    it('Browser is returned in functions', function (done) {
+        var browser = new PhantomHigh();
+        var url = testUrls[0];
+        browser.openPage(url).takeSnapshot(function (error, result) {
             assert.include(result, '</html>', 'Snapshot results contain closing </html> tag');
+            browser.done();
             done(error);
+        });
+    });
 
-        })
-    })
 
 });
