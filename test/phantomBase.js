@@ -96,10 +96,10 @@ describe('Testing PhantomHigh Object', function () {
             .openPage(url)
             .waitForElement(SELECTOR)
             .getInnerHTML(SELECTOR, function (error, result) {
-                assert.equal(result, 'BUBBLES', 'Waited element html should be BUBBLES');
+                assert.equal(result, 'BUBBLES', 'Awaited element innerHTML should be "BUBBLES"');
                 browser.done();
                 done(error);
             });
-    })
+    });
 
 });
