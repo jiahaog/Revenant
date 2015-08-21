@@ -79,5 +79,14 @@ describe('Testing PhantomHigh Object', function () {
         });
     });
 
+    it('Callback triggers an error if a page is not open', function (done) {
+        var browser = new PhantomHigh();
+
+        browser.takeSnapshot(function (error) {
+            assert.ok(error, 'Error should say that a page is not open');
+            done();
+        })
+    });
+
 
 });
