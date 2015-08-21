@@ -10,8 +10,7 @@ var assert = chai.assert;
 var phantomBase = require('./../lib/phantomBase');
 var PhantomHigh = require('./../lib/PhantomHigh');
 
-
-const testUrls = ['http://apple.com', 'https://www.facebook.com/'];
+const testUrls = ['http://apple.com', 'https://www.facebook.com/', 'http://skewedlines.github.io/ajax-test-page/'];
 const INVALID_URL = 'http://insdasjdlkas.com/';
 
 
@@ -57,7 +56,7 @@ describe('Testing PhantomHigh Object', function () {
             done(error);
         })
     });
-    
+
     it('Can do tasks sequentially and get a snapshot', function (done) {
         var browser = new PhantomHigh();
         var url = testUrls[0];
@@ -88,5 +87,19 @@ describe('Testing PhantomHigh Object', function () {
         })
     });
 
+    it('Can wait for an element to appear and can get the innerHTML of the element', function (done) {
+        var browser = new PhantomHigh();
+        var url = testUrls[2];
+
+        const SELECTOR = '#setTimeoutContent';
+        browser
+            .openPage(url)
+            .waitForElement(SELECTOR)
+            .getInnerHTML(SELECTOR, function (error, result) {
+                assert.equal(result, 'BUBBLES', 'Waited element html should be BUBBLES');
+                browser.done();
+                done(error);
+            });
+    })
 
 });
