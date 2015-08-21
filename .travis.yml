@@ -5,4 +5,3 @@ node_js:
   - "0.10"
   - "node"
   - "iojs"
-  - "iojs-v1.0.4"
