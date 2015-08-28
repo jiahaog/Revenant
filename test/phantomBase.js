@@ -36,7 +36,7 @@ describe('Testing base PhantomJS functions', function () {
             assert.ok(error, 'An error should be received when opening pages');
             done();
         });
-    })
+    });
 });
 
 describe('Testing PhantomHigh Object', function () {
@@ -101,5 +101,24 @@ describe('Testing PhantomHigh Object', function () {
                 done(error);
             });
     });
+
+    it('Can fill a form and query a form for its value', function (done) {
+        var browser = new PhantomHigh();
+        var url = testUrls[2];
+
+        const USERNAME_SELECTOR = '#form-username';
+        const PASSWORD_SELECTOR = '#form-password';
+
+        const USERNAME = 'user123';
+
+        browser
+            .openPage(url)
+            .fillForm(USERNAME_SELECTOR, USERNAME)
+            .getSelectorValue(USERNAME_SELECTOR, function (error, result) {
+                assert.equal(result, USERNAME, 'Username should be equal to filled value');
+                browser.done();
+                done(error);
+            })
+    })
 
 });
