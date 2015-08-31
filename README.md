@@ -50,9 +50,9 @@ browser
 ```
 ## API
 
-*Todo*
+*TODO*
 
-The tests `/test/test.js`  are comprehensive and features good example usage of the various functions.
+The tests in `/test/test.js`  are comprehensive and features good example usage of the various functionalities.
 
 ## Test
 
