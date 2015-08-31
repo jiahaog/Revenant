@@ -13,7 +13,6 @@ var PhantomHigh = require('./../lib/PhantomHigh');
 const testUrls = ['http://apple.com', 'https://www.facebook.com/', 'http://skewedlines.github.io/ajax-test-page/'];
 const INVALID_URL = 'http://insdasjdlkas.com/';
 
-
 describe('Testing base PhantomJS functions', function () {
     this.timeout(50000);
     it('Can open pages', function (done) {
@@ -71,7 +70,8 @@ describe('Testing PhantomHigh Object', function () {
     it('Browser is returned in functions', function (done) {
         var browser = new PhantomHigh();
         var url = testUrls[0];
-        browser.openPage(url).takeSnapshot(function (error, result) {
+        browser.openPage(url);
+        browser.takeSnapshot(function (error, result) {
             assert.include(result, '</html>', 'Snapshot results contain closing </html> tag');
             browser.done();
             done(error);
@@ -92,10 +92,9 @@ describe('Testing PhantomHigh Object', function () {
         var url = testUrls[2];
 
         const SELECTOR = '#setTimeoutContent';
-        browser
-            .openPage(url)
-            .waitForElement(SELECTOR)
-            .getInnerHTML(SELECTOR, function (error, result) {
+        browser.openPage(url);
+        browser.waitForElement(SELECTOR);
+        browser.getInnerHTML(SELECTOR, function (error, result) {
                 assert.equal(result, 'BUBBLES', 'Awaited element innerHTML should be "BUBBLES"');
                 browser.done();
                 done(error);
@@ -111,14 +110,13 @@ describe('Testing PhantomHigh Object', function () {
 
         const USERNAME = 'user123';
 
-        browser
-            .openPage(url)
-            .fillForm(USERNAME_SELECTOR, USERNAME)
-            .getSelectorValue(USERNAME_SELECTOR, function (error, result) {
+        browser.openPage(url);
+        browser.fillForm(USERNAME_SELECTOR, USERNAME);
+        browser.getSelectorValue(USERNAME_SELECTOR, function (error, result) {
                 assert.equal(result, USERNAME, 'Username should be equal to filled value');
                 browser.done();
                 done(error);
             })
-    })
+    });
 
 });
