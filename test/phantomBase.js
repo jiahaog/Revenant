@@ -2,7 +2,6 @@
  * Created by JiaHao on 18/8/15.
  */
 
-
 var async = require('async');
 var chai = require('chai');
 var assert = chai.assert;
@@ -41,40 +40,84 @@ describe('Testing base PhantomJS functions', function () {
 describe('Testing PhantomHigh Object', function () {
     this.timeout(30000);
 
-    it('Can open pages (Node style callback)', function (done) {
-        async.each(testUrls, function (testUrl, callback) {
+    describe('Basic tasks', function () {
 
-            var browser = new PhantomHigh();
-            browser.openPage(testUrl, function (error) {
-                browser.done();
-                callback(error);
+        it('Can open pages (Node style callback)', function (done) {
+            async.each(testUrls, function (testUrl, callback) {
+
+                var browser = new PhantomHigh();
+                browser.openPage(testUrl, function (error) {
+                    browser.done();
+                    callback(error);
+                });
+
+            }, function (error) {
+                assert.notOk(error, 'No error should be received when opening a valid page.');
+                done(error);
             });
+        });
 
-        }, function (error) {
-            assert.notOk(error, 'No error should be received when opening a valid page.');
-            done(error);
-        })
-    });
+        it('Can do tasks sequentially and get a snapshot', function (done) {
+            var browser = new PhantomHigh();
+            var url = testUrls[0];
+            browser
+                .openPage(url)
+                .then(function () {
+                    return browser.takeSnapshot();
+                })
+                .then(function (result) {
+                    assert.include(result, '</html>', 'Snapshot results contain closing </html> tag');
+                    browser.done();
+                    done();
+                }).fail(function (error) {
+                    browser.done();
+                    done(error);
+                });
+        });
 
-    it('Can do tasks sequentially and get a snapshot', function (done) {
-        var browser = new PhantomHigh();
-        var url = testUrls[0];
-        browser
-            .openPage(url)
-            .then(function () {
-                return browser.takeSnapshot();
-            })
-            .then(function (result) {
-                assert.include(result, '</html>', 'Snapshot results contain closing </html> tag');
-                browser.done();
-                done();
-            }).fail(function (error) {
+        it('Can wait for an element to appear and can get the innerHTML of the element', function (done) {
+            var browser = new PhantomHigh();
+            var url = testUrls[2];
+
+            const SELECTOR = '#setTimeoutContent';
+            browser.openPage(url);
+            browser.waitForElement(SELECTOR);
+            browser.getInnerHTML(SELECTOR, function (error, result) {
+                assert.equal(result, 'BUBBLES', 'Awaited element innerHTML should be "BUBBLES"');
                 browser.done();
                 done(error);
             });
+        });
+
+        it('Can fill a form and query a form for its value', function (done) {
+            var browser = new PhantomHigh();
+            var url = testUrls[2];
+
+            const USERNAME_SELECTOR = '#form-username';
+            const PASSWORD_SELECTOR = '#form-password';
+
+            const USERNAME = 'user123';
+
+            browser
+                .openPage(url)
+                .then(function () {
+                    return browser.fillForm(USERNAME_SELECTOR, USERNAME);
+                })
+                .then(function () {
+                    return browser.getSelectorValue(USERNAME_SELECTOR);
+                }).then(function (result) {
+                    assert.equal(result, USERNAME, 'Username should be equal to filled value');
+                    browser.done();
+                    done();
+                }).fail(function (error) {
+                    done(error);
+                });
+        });
+
     });
 
     describe('Graceful failures', function () {
+
         describe('Error triggers if a page is not open', function () {
 
             it('Node style callback', function (done) {
@@ -128,42 +171,4 @@ describe('Testing PhantomHigh Object', function () {
         });
     });
 
-    it('Can wait for an element to appear and can get the innerHTML of the element', function (done) {
-        var browser = new PhantomHigh();
-        var url = testUrls[2];
-
-        const SELECTOR = '#setTimeoutContent';
-        browser.openPage(url);
-        browser.waitForElement(SELECTOR);
-        browser.getInnerHTML(SELECTOR, function (error, result) {
-                assert.equal(result, 'BUBBLES', 'Awaited element innerHTML should be "BUBBLES"');
-                browser.done();
-                done(error);
-            });
-    });
-
-    it('Can fill a form and query a form for its value', function (done) {
-        var browser = new PhantomHigh();
-        var url = testUrls[2];
-
-        const USERNAME_SELECTOR = '#form-username';
-        const PASSWORD_SELECTOR = '#form-password';
-
-        const USERNAME = 'user123';
-
-        browser
-            .openPage(url)
-            .then(function () {
-                return browser.fillForm(USERNAME_SELECTOR, USERNAME);
-            })
-            .then(function () {
-                return browser.getSelectorValue(USERNAME_SELECTOR);
-            }).then(function (result) {
-                assert.equal(result, USERNAME, 'Username should be equal to filled value');
-                browser.done();
-                done();
-            }).fail(function (error) {
-                done(error);
-            });
-    });
 });
