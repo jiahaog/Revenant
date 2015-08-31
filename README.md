@@ -52,6 +52,8 @@ browser
 
 *Todo*
 
+The tests `/test/test.js`  are comprehensive and features good example usage of the various functions.
+
 ## Test
 
 ```bash
