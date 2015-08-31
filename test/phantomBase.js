@@ -7,7 +7,7 @@ var chai = require('chai');
 var assert = chai.assert;
 
 var phantomBase = require('./../lib/phantomBase');
-var PhantomHigh = require('./../lib/PhantomHigh');
+var PhantomBrowser = require('./../lib/PhantomBrowser');
 
 const testUrls = ['http://apple.com', 'https://www.facebook.com/', 'http://skewedlines.github.io/ajax-test-page/'];
 const INVALID_URL = 'http://insdasjdlkas.com/';
@@ -37,7 +37,7 @@ describe('Testing base PhantomJS functions', function () {
     });
 });
 
-describe('Testing PhantomHigh Object', function () {
+describe('Testing PhantomBrowser Object', function () {
     this.timeout(30000);
 
     describe('Basic tasks', function () {
@@ -45,7 +45,7 @@ describe('Testing PhantomHigh Object', function () {
         it('Can open pages (Node style callback)', function (done) {
             async.each(testUrls, function (testUrl, callback) {
 
-                var browser = new PhantomHigh();
+                var browser = new PhantomBrowser();
                 browser.openPage(testUrl, function (error) {
                     browser.done();
                     callback(error);
@@ -58,7 +58,7 @@ describe('Testing PhantomHigh Object', function () {
         });
 
         it('Can do tasks sequentially and get a snapshot', function (done) {
-            var browser = new PhantomHigh();
+            var browser = new PhantomBrowser();
             var url = testUrls[0];
             browser
                 .openPage(url)
@@ -76,7 +76,7 @@ describe('Testing PhantomHigh Object', function () {
         });
 
         it('Can wait for an element to appear and can get the innerHTML of the element', function (done) {
-            var browser = new PhantomHigh();
+            var browser = new PhantomBrowser();
             var url = testUrls[2];
 
             const SELECTOR = '#setTimeoutContent';
@@ -99,7 +99,7 @@ describe('Testing PhantomHigh Object', function () {
         });
 
         it('Can fill a form and query a form for its value', function (done) {
-            var browser = new PhantomHigh();
+            var browser = new PhantomBrowser();
             var url = testUrls[2];
 
             const USERNAME_SELECTOR = '#form-username';
@@ -130,7 +130,7 @@ describe('Testing PhantomHigh Object', function () {
         describe('Error triggers if a page is not open', function () {
 
             it('Node style callback', function (done) {
-                var browser = new PhantomHigh();
+                var browser = new PhantomBrowser();
 
                 browser.takeSnapshot(function (error) {
                     browser.done();
@@ -140,7 +140,7 @@ describe('Testing PhantomHigh Object', function () {
             });
 
             it('Promise', function (done) {
-                var browser = new PhantomHigh();
+                var browser = new PhantomBrowser();
 
                 browser
                     .takeSnapshot()
@@ -155,7 +155,7 @@ describe('Testing PhantomHigh Object', function () {
         });
 
         it('Promise Should propagate errors', function (done) {
-            var browser = new PhantomHigh();
+            var browser = new PhantomBrowser();
 
             // provide an invalid url, error should be sent in the callback at .openPage();
             var url = null;
