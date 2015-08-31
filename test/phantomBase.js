@@ -41,7 +41,7 @@ describe('Testing base PhantomJS functions', function () {
 describe('Testing PhantomHigh Object', function () {
     this.timeout(30000);
 
-    it('Can open pages', function (done) {
+    it('Can open pages (Node style callback)', function (done) {
         async.each(testUrls, function (testUrl, callback) {
 
             var browser = new PhantomHigh();
@@ -59,32 +59,73 @@ describe('Testing PhantomHigh Object', function () {
     it('Can do tasks sequentially and get a snapshot', function (done) {
         var browser = new PhantomHigh();
         var url = testUrls[0];
-        browser.openPage(url);
-        browser.takeSnapshot(function (error, result) {
-            assert.include(result, '</html>', 'Snapshot results contain closing </html> tag');
-            browser.done();
-            done(error);
-        });
+        browser
+            .openPage(url)
+            .then(function () {
+                return browser.takeSnapshot();
+            })
+            .then(function (result) {
+                assert.include(result, '</html>', 'Snapshot results contain closing </html> tag');
+                browser.done();
+                done();
+            }).fail(function (error) {
+                browser.done();
+                done(error);
+            });
     });
 
-    it('Browser is returned in functions', function (done) {
-        var browser = new PhantomHigh();
-        var url = testUrls[0];
-        browser.openPage(url);
-        browser.takeSnapshot(function (error, result) {
-            assert.include(result, '</html>', 'Snapshot results contain closing </html> tag');
-            browser.done();
-            done(error);
+    describe('Graceful failures', function () {
+        describe('Error triggers if a page is not open', function () {
+
+            it('Node style callback', function (done) {
+                var browser = new PhantomHigh();
+
+                browser.takeSnapshot(function (error) {
+                    browser.done();
+                    assert.ok(error, 'Error should say that a page is not open');
+                    done();
+                });
+            });
+
+            it('Promise', function (done) {
+                var browser = new PhantomHigh();
+
+                browser
+                    .takeSnapshot()
+                    .then(function (result) {
+                        done('Error: Result callback should not be called, it is invalid');
+                    }).fail(function (error) {
+                        browser.done();
+                        assert.ok(error, 'Error should say that a page is not open');
+                        done();
+                    });
+            });
         });
-    });
 
-    it('Callback triggers an error if a page is not open', function (done) {
-        var browser = new PhantomHigh();
+        it('Promise Should propagate errors', function (done) {
+            var browser = new PhantomHigh();
 
-        browser.takeSnapshot(function (error) {
-            assert.ok(error, 'Error should say that a page is not open');
-            done();
-        })
+            // provide an invalid url, error should be sent in the callback at .openPage();
+            var url = null;
+
+            browser
+                .openPage(url)
+                .then(function () {
+                    return browser.takeSnapshot();
+                })
+                .then(function (result) {
+                    browser.done();
+                    done('Error callback should have been triggered, not this.');
+                }).fail(function (error) {
+                    browser.done();
+                    assert.ok(error, 'Error should say that an invalid url is provided');
+                    done();
+                }).fail(function (error) {
+                    // this will be reached if an exception is thrown in the callback for .fail()
+                    // as there are issues when throwing synchronous errors in the final callback
+                    done(error);
+                });
+        });
     });
 
     it('Can wait for an element to appear and can get the innerHTML of the element', function (done) {
@@ -110,57 +151,19 @@ describe('Testing PhantomHigh Object', function () {
 
         const USERNAME = 'user123';
 
-        browser.openPage(url);
-        browser.fillForm(USERNAME_SELECTOR, USERNAME);
-        browser.getSelectorValue(USERNAME_SELECTOR, function (error, result) {
+        browser
+            .openPage(url)
+            .then(function () {
+                return browser.fillForm(USERNAME_SELECTOR, USERNAME);
+            })
+            .then(function () {
+                return browser.getSelectorValue(USERNAME_SELECTOR);
+            }).then(function (result) {
                 assert.equal(result, USERNAME, 'Username should be equal to filled value');
                 browser.done();
+                done();
+            }).fail(function (error) {
                 done(error);
-            })
-    });
-
-    describe('Promise Implementation test', function () {
-
-        it('Should allow cascading of promises', function (done) {
-            var browser = new PhantomHigh();
-            var url = testUrls[2];
-
-            browser
-                .openPage(url)
-                .then(function () {
-                    return browser.takeSnapshot();
-                })
-                .then(function (result) {
-                    browser.done();
-                    assert.include(result, '</html>', 'Snapshot results contain closing </html> tag');
-                    done();
-                }).fail(function (error) {
-                    browser.done();
-                    done(error);
-                });
-        });
-
-        it('Should propagate errors', function (done) {
-            var browser = new PhantomHigh();
-            var url = null;
-
-            browser
-                .openPage(url)
-                .then(function () {
-                    return browser.takeSnapshot();
-                })
-                .then(function (result) {
-                    browser.done();
-                    done('Error callback should have been triggered, not this.');
-                }).fail(function (error) {
-                    browser.done();
-                    assert.ok(error, 'Error should say that an invalid url is provided');
-                    done();
-                }).fail(function (error) {
-                    // this will be reached if an exception is thrown in the callback for .fail()
-                    // as there are issues when throwing synchronous errors in the final callback
-                    done(error);
-                });
-        });
+            });
     });
 });
