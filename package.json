@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/skewedlines/PhantomHigh.git"
+    "url": "git+https://github.com/skewedlines/Revenant.git"
   },
   "author": "Jia Hao",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/skewedlines/PhantomHigh/issues"
+    "url": "https://github.com/skewedlines/Revenant/issues"
   },
-  "homepage": "https://github.com/skewedlines/PhantomHigh#readme",
+  "homepage": "https://github.com/skewedlines/Revenant#readme",
   "dependencies": {
     "async": "^1.4.2",
     "chance": "^0.7.6",
@@ -25,5 +25,16 @@
   "devDependencies": {
     "chai": "^3.2.0",
     "mocha": "^2.2.5"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "keywords": [
+    "phantom",
+    "phantomjs",
+    "headless",
+    "browser",
+    "scraper",
+    "crawler"
+  ]
 }
