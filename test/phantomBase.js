@@ -119,4 +119,48 @@ describe('Testing PhantomHigh Object', function () {
             })
     });
 
+    describe('Promise Implementation test', function () {
+
+        it('Should allow cascading of promises', function (done) {
+            var browser = new PhantomHigh();
+            var url = testUrls[2];
+
+            browser
+                .openPage(url)
+                .then(function () {
+                    return browser.takeSnapshot();
+                })
+                .then(function (result) {
+                    browser.done();
+                    assert.include(result, '</html>', 'Snapshot results contain closing </html> tag');
+                    done();
+                }).fail(function (error) {
+                    browser.done();
+                    done(error);
+                });
+        });
+
+        it('Should propagate errors', function (done) {
+            var browser = new PhantomHigh();
+            var url = null;
+
+            browser
+                .openPage(url)
+                .then(function () {
+                    return browser.takeSnapshot();
+                })
+                .then(function (result) {
+                    browser.done();
+                    done('Error callback should have been triggered, not this.');
+                }).fail(function (error) {
+                    browser.done();
+                    assert.ok(error, 'Error should say that an invalid url is provided');
+                    done();
+                }).fail(function (error) {
+                    // this will be reached if an exception is thrown in the callback for .fail()
+                    // as there are issues when throwing synchronous errors in the final callback
+                    done(error);
+                });
+        });
+    });
 });
