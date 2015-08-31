@@ -40,7 +40,7 @@ describe('Testing base PhantomJS functions', function () {
 });
 
 describe('Testing PhantomHigh Object', function () {
-    this.timeout(50000);
+    this.timeout(30000);
 
     it('Can open pages', function (done) {
         async.each(testUrls, function (testUrl, callback) {
