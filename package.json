@@ -2,7 +2,7 @@
   "name": "revenant",
   "version": "0.1.0",
   "description": "A headless browser powered by PhantomJS functions in Node.js",
-  "main": "index.js",
+  "main": "lib/Revenant.js",
   "scripts": {
     "test": "mocha --reporter spec"
   },
