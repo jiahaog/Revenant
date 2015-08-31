@@ -1,5 +1,5 @@
 {
-  "name": "phantom-browser",
+  "name": "revenant",
   "version": "0.1.0",
   "description": "High level PhantomJS functions to make life easier",
   "main": "index.js",
