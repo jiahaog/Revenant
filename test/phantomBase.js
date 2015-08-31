@@ -80,13 +80,22 @@ describe('Testing PhantomHigh Object', function () {
             var url = testUrls[2];
 
             const SELECTOR = '#setTimeoutContent';
-            browser.openPage(url);
-            browser.waitForElement(SELECTOR);
-            browser.getInnerHTML(SELECTOR, function (error, result) {
-                assert.equal(result, 'BUBBLES', 'Awaited element innerHTML should be "BUBBLES"');
-                browser.done();
-                done(error);
-            });
+            browser
+                .openPage(url)
+                .then(function () {
+                    return browser.waitForElement(SELECTOR);
+                })
+                .then(function () {
+                    return browser.getInnerHTML(SELECTOR);
+                })
+                .then(function (result) {
+                    assert.equal(result, 'BUBBLES', 'Awaited element innerHTML should be "BUBBLES"');
+                    browser.done();
+                    done();
+                }).fail(function (error) {
+                    browser.done();
+                    done(error);
+                });
         });
 
         it('Can fill a form and query a form for its value', function (done) {
