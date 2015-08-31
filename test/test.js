@@ -123,6 +123,31 @@ describe('Testing Revenant Object', function () {
                 });
         });
 
+        it('Can pass flags into the PhantomJS process', function (done) {
+
+            // We use a URL which will return an ssl handshake error, and we try to pass a flag that ignores that
+
+            var SSL_HANDSHAKE_ERROR_URL = 'https://myportal.sutd.edu.sg/';
+
+            var browser = new Revenant({
+                flags: ['--ignore-ssl-errors=yes']
+            });
+
+            browser
+                .openPage(SSL_HANDSHAKE_ERROR_URL)
+                .then(function () {
+                    return browser.takeSnapshot();
+                })
+                .then(function (result) {
+                    assert.ok(result, 'A proper result should be returned, as the ssl error handshake error should have been ignored');
+                    browser.done();
+                    done();
+                }).fail(function (error) {
+                    browser.done();
+                    done(error);
+                });
+        });
+
     });
 
     describe('Graceful failures', function () {
