@@ -9,7 +9,8 @@ var assert = chai.assert;
 var base = require('./../lib/base');
 var Revenant = require('./../lib/Revenant');
 
-const testUrls = ['http://apple.com', 'https://www.facebook.com/', 'http://skewedlines.github.io/ajax-test-page/'];
+const testUrls = ['http://apple.com', 'http://skewedlines.github.io/ajax-test-page/'];
+const AJAX_URL = testUrls[1];
 const INVALID_URL = 'http://insdasjdlkas.com/';
 
 describe('Testing base PhantomJS functions', function () {
@@ -77,7 +78,7 @@ describe('Testing Revenant Object', function () {
 
         it('Can wait for an element to appear and can get the innerHTML of the element', function (done) {
             var browser = new Revenant();
-            var url = testUrls[2];
+            var url = AJAX_URL;
 
             const SELECTOR = '#setTimeoutContent';
             browser
@@ -100,7 +101,7 @@ describe('Testing Revenant Object', function () {
 
         it('Can fill a form and query a form for its value', function (done) {
             var browser = new Revenant();
-            var url = testUrls[2];
+            var url = AJAX_URL;
 
             const USERNAME_SELECTOR = '#form-username';
             const PASSWORD_SELECTOR = '#form-password';
