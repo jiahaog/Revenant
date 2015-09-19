@@ -126,7 +126,30 @@ describe('Testing Revenant Object', function () {
                     return browser.getInnerHTML(SELECTOR);
                 })
                 .then(function (result) {
-                    assert.equal(result, 'BUBBLES', 'Awaited element innerHTML should be "BUBBLES"');
+                    assert.isTrue(result.indexOf('BUBBLES') > -1, 'Awaited element innerHTML should contain "BUBBLES"');
+                    browser.done();
+                    done();
+                }).fail(function (error) {
+                    browser.done();
+                    done(error);
+                });
+        });
+
+        it('Can wait for an element to appear by quering the DOM for a string', function (done) {
+            var browser = new Revenant();
+            var url = AJAX_URL;
+
+            const stringQuery = 'BUBBLES HI';
+            browser
+                .openPage(url)
+                .then(function () {
+                    return browser.waitForDomString(stringQuery);
+                })
+                .then(function () {
+                    return browser.takeSnapshot();
+                })
+                .then(function (dom) {
+                    assert.isTrue(dom.indexOf(stringQuery) > -1, 'DOM should contain "BUBBLES HI"');
                     browser.done();
                     done();
                 }).fail(function (error) {
