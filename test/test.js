@@ -6,6 +6,7 @@ var async = require('async');
 var chai = require('chai');
 var assert = chai.assert;
 var validUrl = require('valid-url');
+var url = require('url');
 
 var base = require('./../lib/base');
 var Revenant = require('./../lib/Revenant');
@@ -72,21 +73,25 @@ describe('Testing Revenant Object', function () {
         it('Can navigate to another page', function (done) {
             var browser = new Revenant();
 
+            var oldUrl = testUrls[0]
             browser
-                .openPage(testUrls[0])
+                .openPage(oldUrl)
                 .then(function () {
                     return browser.navigateToUrl(testUrls[1]);
                 })
                 .then(function () {
-                    browser.getUrl(function (error, url) {
-                        console.log(url);
+                    browser.getUrl(function (error, newUrl) {
+
+                        // just check if the domain is different because we might have been redirected
+                        var isUrlDifferent = url.parse(newUrl).hostname !==  url.parse(oldUrl).hostname;
+                        assert.isTrue(isUrlDifferent, 'Navigated url is different from the first url');
                         done();
                     });
 
                 }).fail(function (error) {
                     browser.done();
                     done(error);
-                })
+                });
         });
 
         it('Can do tasks sequentially and get a snapshot', function (done) {
