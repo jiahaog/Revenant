@@ -69,6 +69,26 @@ describe('Testing Revenant Object', function () {
             });
         });
 
+        it('Can navigate to another page', function (done) {
+            var browser = new Revenant();
+
+            browser
+                .openPage(testUrls[0])
+                .then(function () {
+                    return browser.navigateToUrl(testUrls[1]);
+                })
+                .then(function () {
+                    browser.getUrl(function (error, url) {
+                        console.log(url);
+                        done();
+                    });
+
+                }).fail(function (error) {
+                    browser.done();
+                    done(error);
+                })
+        });
+
         it('Can do tasks sequentially and get a snapshot', function (done) {
             var browser = new Revenant();
             var url = testUrls[0];
