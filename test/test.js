@@ -5,6 +5,7 @@
 var async = require('async');
 var chai = require('chai');
 var assert = chai.assert;
+var validUrl = require('valid-url');
 
 var base = require('./../lib/base');
 var Revenant = require('./../lib/Revenant');
@@ -49,6 +50,9 @@ describe('Testing Revenant Object', function () {
                 var browser = new Revenant();
                 browser.openPage(testUrl, function (error) {
                     browser.done();
+
+                    assert.isTrue(!!validUrl.isWebUri(browser.url), 'Current url of the page is saved to the object');
+
                     callback(error);
                 });
 
