@@ -51,9 +51,16 @@ describe('Testing Revenant Object', function () {
                 browser.openPage(testUrl, function (error) {
                     browser.done();
 
-                    assert.isTrue(!!validUrl.isWebUri(browser.url), 'Current url of the page is saved to the object');
+                    if (error) {
+                        callback(error);
+                        return;
+                    }
 
-                    callback(error);
+                    browser.getUrl(function (error, url) {
+                        assert.isTrue(!!validUrl.isWebUri(url), 'Current url of the page is saved to the object');
+                        callback(error);
+                    });
+
                 });
 
             }, function (error) {
