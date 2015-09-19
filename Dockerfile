@@ -38,4 +38,4 @@ RUN npm install
 COPY lib lib
 COPY test test
 
-RUN npm test
+CMD npm test
