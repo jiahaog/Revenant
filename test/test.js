@@ -158,6 +158,38 @@ describe('Testing Revenant Object', function () {
                 });
         });
 
+        it('Can change the selected index of a dropdown box', function (done) {
+            var browser = new Revenant();
+            var url = AJAX_URL;
+
+            const DROPDOWN_SELECTOR = '#dropdown';
+            const CHANGE_TO_INDEX = 3;
+
+            const RESULT_BOX_SELECTOR = '#dropdown-selected-result';
+            // expected value after change
+            const FINAL_VALUE = 'index3';
+            browser
+                .openPage(url)
+                .then(function () {
+                    return browser.changeDropdownIndex(DROPDOWN_SELECTOR, CHANGE_TO_INDEX);
+                })
+                .then(function () {
+                    return browser.takeSnapshot();
+                })
+                .then(function () {
+                    return browser.getInnerHTML(RESULT_BOX_SELECTOR);
+                })
+                .then(function (result) {
+                    assert.isTrue(result.indexOf(FINAL_VALUE) > -1, 'Awaited result that shows the selected index should be "index3"');
+                    browser.done();
+                    done();
+                })
+                .fail(function (error) {
+                    browser.done();
+                    done(error);
+                });
+        });
+
         it('Can fill a form and query a form for its value', function (done) {
             var browser = new Revenant();
             var url = AJAX_URL;
