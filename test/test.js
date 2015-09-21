@@ -13,6 +13,7 @@ var Revenant = require('./../lib/Revenant');
 
 const testUrls = ['http://apple.com', 'http://skewedlines.github.io/ajax-test-page/'];
 const AJAX_URL = testUrls[1];
+const AJAX_BUTTON_TEST_URL = 'http://skewedlines.github.io/ajax-test-page/ajax_button_test.html';
 const INVALID_URL = 'http://insdasjdlkas.com/';
 
 describe('Testing base PhantomJS functions', function () {
@@ -73,7 +74,7 @@ describe('Testing Revenant Object', function () {
         it('Can navigate to another page', function (done) {
             var browser = new Revenant();
 
-            var oldUrl = testUrls[0]
+            var oldUrl = testUrls[0];
             browser
                 .openPage(oldUrl)
                 .then(function () {
@@ -240,8 +241,55 @@ describe('Testing Revenant Object', function () {
                 });
         });
 
-    });
+        it('Can click a hyperlink', function (done) {
+            var browser = new Revenant();
+            var url = AJAX_URL;
+            const HYPERLINK_SELECTOR = '#hyperlink-to-button-test';
 
+            browser
+                .openPage(url)
+                .then(function () {
+                    return browser.clickElement(HYPERLINK_SELECTOR, false);
+                })
+                .then(function () {
+                    return browser.getUrl();
+                })
+                .then(function (finalUrl) {
+                    assert.equal(finalUrl, AJAX_BUTTON_TEST_URL, 'Final url is the test page for button clicks');
+                    browser.done();
+                    done();
+                })
+                .fail(function (error) {
+                    browser.done();
+                    done(error);
+                });
+        });
+
+        it('Can click a button which triggers ajax change in the page', function (done) {
+            var browser = new Revenant();
+            const BUTTON_SELECTOR = '#ajax-button';
+            const RESULT_BOX_SELECTOR = '#ajax-button-result';
+            const EXPECTED_RESULT = 'CAKES ARE AWESOME';
+            browser
+                .openPage(AJAX_BUTTON_TEST_URL)
+                .then(function () {
+                    return browser.clickElement(BUTTON_SELECTOR, true);
+                })
+                .then(function () {
+                    return browser.getInnerHTML(RESULT_BOX_SELECTOR);
+                })
+                .then(function (result) {
+                    assert.isTrue(result.indexOf(EXPECTED_RESULT) > -1, 'Result box result should be correct');
+                    browser.done();
+                    done();
+                })
+                .fail(function (error) {
+                    browser.done();
+                    done(error);
+                });
+        });
+    });
+    
     describe('Graceful failures', function () {
 
         describe('Error triggers if a page is not open', function () {
