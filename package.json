@@ -19,6 +19,7 @@
   "dependencies": {
     "async": "^1.4.2",
     "chance": "^0.7.6",
+    "levenshtein": "^1.0.5",
     "phantom": "^0.7.2",
     "q": "^1.4.1"
   },
