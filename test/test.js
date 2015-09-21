@@ -207,7 +207,6 @@ describe('Testing Revenant Object', function () {
                     return browser.getInnerHTML(RESULT_BOX_SELECTOR);
                 })
                 .then(function (result) {
-                    console.log(result);
                     assert.isTrue(result.indexOf(FINAL_VALUE) > -1, 'Awaited result that shows the checkbox state should show true');
                     browser.done();
                     done();
