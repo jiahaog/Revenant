@@ -175,13 +175,40 @@ describe('Testing Revenant Object', function () {
                     return browser.changeDropdownIndex(DROPDOWN_SELECTOR, CHANGE_TO_INDEX);
                 })
                 .then(function () {
-                    return browser.takeSnapshot();
+                    return browser.getInnerHTML(RESULT_BOX_SELECTOR);
+                })
+                .then(function (result) {
+                    assert.isTrue(result.indexOf(FINAL_VALUE) > -1, 'Awaited result that shows the selected index should be "index3"');
+                    browser.done();
+                    done();
+                })
+                .fail(function (error) {
+                    browser.done();
+                    done(error);
+                });
+        });
+
+        it('Can change the state of a checkbox', function (done) {
+            var browser = new Revenant();
+            var url = AJAX_URL;
+
+            const CHECKBOX_SELECTOR = '#checkbox';
+
+            const RESULT_BOX_SELECTOR = '#checkbox-state';
+            // expected value after change
+            const FINAL_VALUE = 'true';
+            browser
+                .openPage(url)
+                .then(function () {
+                    // default .checked is false, so change it to true
+                    return browser.setCheckboxState(CHECKBOX_SELECTOR, true);
                 })
                 .then(function () {
                     return browser.getInnerHTML(RESULT_BOX_SELECTOR);
                 })
                 .then(function (result) {
-                    assert.isTrue(result.indexOf(FINAL_VALUE) > -1, 'Awaited result that shows the selected index should be "index3"');
+                    console.log(result);
+                    assert.isTrue(result.indexOf(FINAL_VALUE) > -1, 'Awaited result that shows the checkbox state should show true');
                     browser.done();
                     done();
                 })
@@ -289,7 +316,7 @@ describe('Testing Revenant Object', function () {
                 });
         });
     });
-    
+
     describe('Graceful failures', function () {
 
         describe('Error triggers if a page is not open', function () {
