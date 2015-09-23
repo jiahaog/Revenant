@@ -1,6 +1,6 @@
 {
   "name": "revenant",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "A headless browser powered by PhantomJS functions in Node.js",
   "main": "lib/Revenant.js",
   "scripts": {
