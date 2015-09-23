@@ -275,7 +275,7 @@ describe('Testing Revenant Object', function () {
             browser
                 .openPage(url)
                 .then(function () {
-                    return browser.clickElement(HYPERLINK_SELECTOR, false);
+                    return browser.clickElement(HYPERLINK_SELECTOR, 2);
                 })
                 .then(function () {
                     return browser.getUrl();
@@ -299,7 +299,7 @@ describe('Testing Revenant Object', function () {
             browser
                 .openPage(AJAX_BUTTON_TEST_URL)
                 .then(function () {
-                    return browser.clickElement(BUTTON_SELECTOR, true);
+                    return browser.clickElement(BUTTON_SELECTOR, 1);
                 })
                 .then(function () {
                     return browser.getInnerHTML(RESULT_BOX_SELECTOR);
