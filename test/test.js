@@ -217,35 +217,6 @@ describe('Testing Revenant Object', function () {
                 });
         });
 
-        it('Can click a checkbox with clickElementSimply()', function (done) {
-            var browser = new Revenant();
-            var url = AJAX_URL;
-
-            const CHECKBOX_SELECTOR = '#checkbox';
-
-            const RESULT_BOX_SELECTOR = '#checkbox-state';
-            // expected value after change
-            const FINAL_VALUE = 'true';
-            browser
-                .openPage(url)
-                .then(function () {
-                    // default .checked is false, so change it to true
-                    return browser.clickElementSimply(CHECKBOX_SELECTOR, 0);
-                })
-                .then(function () {
-                    return browser.getInnerHTML(RESULT_BOX_SELECTOR);
-                })
-                .then(function (result) {
-                    assert.isTrue(result.indexOf(FINAL_VALUE) > -1, 'Awaited result that shows the checkbox state should show true');
-                    browser.done();
-                    done();
-                })
-                .fail(function (error) {
-                    browser.done();
-                    done(error);
-                });
-        });
-
         it('Can fill a form and query a form for its value', function (done) {
             var browser = new Revenant();
             var url = AJAX_URL;
