@@ -11,9 +11,9 @@ var url = require('url');
 var base = require('./../lib/base');
 var Revenant = require('./../lib/Revenant');
 
-const testUrls = ['http://apple.com', 'http://skewedlines.github.io/ajax-test-page/'];
+const testUrls = ['http://apple.com', 'http://jiahaog.github.io/ajax-test-page/'];
 const AJAX_URL = testUrls[1];
-const AJAX_BUTTON_TEST_URL = 'http://skewedlines.github.io/ajax-test-page/ajax_button_test.html';
+const AJAX_BUTTON_TEST_URL = 'http://jiahaog.github.io/ajax-test-page/ajax_button_test.html';
 const INVALID_URL = 'http://insdasjdlkas.com/';
 
 describe('Testing base PhantomJS functions', function () {
