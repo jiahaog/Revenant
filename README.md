@@ -1,6 +1,6 @@
 # Revenant
 
-[![CI Build Status](https://travis-ci.org/skewedlines/Revenant.svg)](https://travis-ci.org/skewedlines/Revenant)
+[![CI Build Status](https://travis-ci.org/jiahaog/Revenant.svg)](https://travis-ci.org/jiahaog/Revenant)
 
 A headless browser powered by PhantomJS functions in Node.js. Based on the [PhantomJS-Node](https://github.com/sgentle/phantomjs-node) bridge. 
 
