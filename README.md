@@ -67,7 +67,7 @@ Example code to open a browser, wait for an element to appear on the page, and t
 var Revenant = require('revenant');
 
 // example AJAX test page
-const URL = 'http://skewedlines.github.io/ajax-test-page/';
+const URL = 'http://jiahaog.github.io/ajax-test-page/';
 
 // selector for AJAX content
 const SELECTOR = '#setTimeoutContent';
