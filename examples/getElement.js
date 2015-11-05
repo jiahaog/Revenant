@@ -27,6 +27,6 @@ browser
         // kills the PhantomJS process
         browser.done();
 
-    }).fail(function (error) {
+    }).catch(function (error) {
         browser.done();
     });

@@ -89,7 +89,7 @@ describe('Testing Revenant Object', function () {
                         done();
                     });
 
-                }).fail(function (error) {
+                }).catch(function (error) {
                     browser.done();
                     done(error);
                 });
@@ -107,7 +107,7 @@ describe('Testing Revenant Object', function () {
                     assert.include(result, '</html>', 'Snapshot results contain closing </html> tag');
                     browser.done();
                     done();
-                }).fail(function (error) {
+                }).catch(function (error) {
                     browser.done();
                     done(error);
                 });
@@ -130,7 +130,7 @@ describe('Testing Revenant Object', function () {
                     assert.isTrue(result.indexOf('BUBBLES') > -1, 'Awaited element innerHTML should contain "BUBBLES"');
                     browser.done();
                     done();
-                }).fail(function (error) {
+                }).catch(function (error) {
                     browser.done();
                     done(error);
                 });
@@ -153,7 +153,7 @@ describe('Testing Revenant Object', function () {
                     assert.isTrue(dom.indexOf(stringQuery) > -1, 'DOM should contain "BUBBLES HI"');
                     browser.done();
                     done();
-                }).fail(function (error) {
+                }).catch(function (error) {
                     browser.done();
                     done(error);
                 });
@@ -182,7 +182,7 @@ describe('Testing Revenant Object', function () {
                     browser.done();
                     done();
                 })
-                .fail(function (error) {
+                .catch(function (error) {
                     browser.done();
                     done(error);
                 });
@@ -211,7 +211,7 @@ describe('Testing Revenant Object', function () {
                     browser.done();
                     done();
                 })
-                .fail(function (error) {
+                .catch(function (error) {
                     browser.done();
                     done(error);
                 });
@@ -237,7 +237,7 @@ describe('Testing Revenant Object', function () {
                     assert.equal(result, USERNAME, 'Username should be equal to filled value');
                     browser.done();
                     done();
-                }).fail(function (error) {
+                }).catch(function (error) {
                     done(error);
                 });
         });
@@ -261,7 +261,7 @@ describe('Testing Revenant Object', function () {
                     assert.ok(result, 'A proper result should be returned, as the ssl error handshake error should have been ignored');
                     browser.done();
                     done();
-                }).fail(function (error) {
+                }).catch(function (error) {
                     browser.done();
                     done(error);
                 });
@@ -285,7 +285,7 @@ describe('Testing Revenant Object', function () {
                     browser.done();
                     done();
                 })
-                .fail(function (error) {
+                .catch(function (error) {
                     browser.done();
                     done(error);
                 });
@@ -309,7 +309,7 @@ describe('Testing Revenant Object', function () {
                     browser.done();
                     done();
                 })
-                .fail(function (error) {
+                .catch(function (error) {
                     browser.done();
                     done(error);
                 });
@@ -337,7 +337,7 @@ describe('Testing Revenant Object', function () {
                     .takeSnapshot()
                     .then(function (result) {
                         done('Error: Result callback should not be called, it is invalid');
-                    }).fail(function (error) {
+                    }).catch(function (error) {
                         browser.done();
                         assert.ok(error, 'Error should say that a page is not open');
                         done();
@@ -359,12 +359,12 @@ describe('Testing Revenant Object', function () {
                 .then(function (result) {
                     browser.done();
                     done('Error callback should have been triggered, not this.');
-                }).fail(function (error) {
+                }).catch(function (error) {
                     browser.done();
                     assert.ok(error, 'Error should say that an invalid url is provided');
                     done();
-                }).fail(function (error) {
-                    // this will be reached if an exception is thrown in the callback for .fail()
+                }).catch(function (error) {
+                    // this will be reached if an exception is thrown in the callback for .catch()
                     // as there are issues when throwing synchronous errors in the final callback
                     done(error);
                 });
