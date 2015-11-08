@@ -89,7 +89,7 @@ browser
         // kills the PhantomJS process
         browser.done();
 
-    }).fail(function (error) {
+    }).catch(function (error) {
         browser.done();
     });
 ```
@@ -116,7 +116,7 @@ browser
 	.then(function (result) {
 		browser.done();
 	})
-	.fail(function (error) {
+	.catch(function (error) {
 		browser.done();
 	});
 ```
