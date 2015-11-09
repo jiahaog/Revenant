@@ -314,12 +314,32 @@ describe('Testing Revenant Object', function () {
                     done(error);
                 });
         });
+
+        it('Can get attributes from a html element', function (done) {
+            var browser = new Revenant();
+            const SELECTOR = '#attribute-test-div';
+            const ATTRIBUTE_KEY = 'data-test-value';
+            const EXPECTED_VALUE = "bread";
+
+            browser
+                .openPage(AJAX_URL)
+                .then(function () {
+                    return browser.getSelectorAttribute(SELECTOR, ATTRIBUTE_KEY);
+                })
+                .then(function (value) {
+                    assert.equal(value, EXPECTED_VALUE, 'Retrieved attribute value should be equal to expected value');
+                    browser.done();
+                    done();
+                })
+                .catch(function (error) {
+                    browser.done();
+                    done(error);
+                });
+        });
     });
 
     describe('Graceful failures', function () {
-
         describe('Error triggers if a page is not open', function () {
-
             it('Node style callback', function (done) {
                 var browser = new Revenant();
 
