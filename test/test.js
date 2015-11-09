@@ -8,7 +8,7 @@ var assert = chai.assert;
 var validUrl = require('valid-url');
 var url = require('url');
 
-var base = require('./../lib/base');
+var navigation = require('./../lib/navigation');
 var Revenant = require('./../lib/Revenant');
 
 const testUrls = ['http://apple.com', 'http://jiahaog.github.io/ajax-test-page/'];
@@ -21,7 +21,7 @@ describe('Testing base PhantomJS functions', function () {
     it('Can open pages', function (done) {
 
         async.each(testUrls, function (testUrl, callback) {
-            base.openPage(testUrl, function (error, page, ph) {
+            navigation.openPage(testUrl, function (error, page, ph) {
                 ph.exit();
                 callback(error);
             });
@@ -33,7 +33,7 @@ describe('Testing base PhantomJS functions', function () {
 
     it('Can fail to open pages gracefully', function (done) {
 
-        base.openPage(INVALID_URL, function (error, page, ph) {
+        navigation.openPage(INVALID_URL, function (error, page, ph) {
             ph.exit();
             assert.ok(error, 'An error should be received when opening pages');
             done();
