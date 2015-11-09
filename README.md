@@ -235,6 +235,10 @@ Submits the form on the page.
 
 ## Test
 
+Tests are done with [Mocha](https://mochajs.org).
+
 ```bash
 $ npm test
 ```
+
+A test web page with asynchronous content to simulate a web app was created for testing purposes, and can be found at [http://jiahaog.github.io/ajax-test-page/](http://jiahaog.github.io/ajax-test-page/).
