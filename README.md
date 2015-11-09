@@ -232,6 +232,16 @@ Submits the form on the page.
 
 - `callback(error)` – *Optional* `function` Callback called when the form has been submitted, the page has reached a new url, and the document is ready
 
+### downloadFile(selector, [callback])
+
+Downloads a file behind a hyperlink to a string.
+
+**Arguments**
+
+- `selector` - `string` Selector for a hyperlink that links to a file to be downloaded
+- `callback(error, file)` – *Optional* `function` Callback called after the file has been downloaded
+
+
 
 ## Test
 
