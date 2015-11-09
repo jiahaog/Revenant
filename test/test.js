@@ -7,6 +7,7 @@ var chai = require('chai');
 var assert = chai.assert;
 var validUrl = require('valid-url');
 var url = require('url');
+var request = require('request');
 
 var navigation = require('./../lib/navigation');
 var Revenant = require('./../lib/Revenant');
@@ -330,6 +331,34 @@ describe('Testing Revenant Object', function () {
                     assert.equal(value, EXPECTED_VALUE, 'Retrieved attribute value should be equal to expected value');
                     browser.done();
                     done();
+                })
+                .catch(function (error) {
+                    browser.done();
+                    done(error);
+                });
+        });
+
+        it('Can download files', function (done) {
+            var browser = new Revenant();
+            const SELECTOR = '#download-link';
+            const CORRECT_FILE_URL = 'http://jiahaog.github.io/ajax-test-page/public/exampleFile.csv';
+            browser
+                .openPage(AJAX_URL)
+                .then(function () {
+                    return browser.downloadFile(SELECTOR);
+                })
+                .then(function (downloaded) {
+                    request(CORRECT_FILE_URL, function (error, response, correctFile) {
+                        if (error) {
+                            browser.done();
+                            done(error);
+                            return
+                        }
+
+                        assert.equal(downloaded, correctFile, 'The downloaded file should be equal to the correct file');
+                        browser.done();
+                        done();
+                    });
                 })
                 .catch(function (error) {
                     browser.done();
