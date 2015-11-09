@@ -341,7 +341,7 @@ describe('Testing Revenant Object', function () {
         it('Can download files', function (done) {
             var browser = new Revenant();
             const SELECTOR = '#download-link';
-            const CORRECT_FILE_URL = 'http://jiahaog.github.io/ajax-test-page/public/exampleFile.csv';
+            const CORRECT_FILE_URL = 'http://jiahaog.github.io/ajax-test-page/public/exampleFile.pdf';
             browser
                 .openPage(AJAX_URL)
                 .then(function () {
