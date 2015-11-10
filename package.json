@@ -21,12 +21,12 @@
     "bluebird": "^3.0.5",
     "chance": "^0.7.6",
     "phantom": "^0.8.3",
+    "request": "^2.65.0",
     "sift-string": "0.0.2"
   },
   "devDependencies": {
     "chai": "^3.2.0",
     "mocha": "^2.2.5",
-    "request": "^2.65.0",
     "valid-url": "^1.0.9"
   },
   "directories": {
