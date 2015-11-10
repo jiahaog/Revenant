@@ -338,33 +338,67 @@ describe('Testing Revenant Object', function () {
                 });
         });
 
-        it('Can download files', function (done) {
-            var browser = new Revenant();
-            const SELECTOR = '#download-link';
-            const CORRECT_FILE_URL = 'http://jiahaog.github.io/ajax-test-page/public/exampleFile.pdf';
-            browser
-                .openPage(AJAX_URL)
-                .then(function () {
-                    return browser.downloadFile(SELECTOR);
-                })
-                .then(function (downloaded) {
-                    request(CORRECT_FILE_URL, function (error, response, correctFile) {
-                        if (error) {
-                            browser.done();
-                            done(error);
-                            return
-                        }
-
-                        assert.equal(downloaded, correctFile, 'The downloaded file should be equal to the correct file');
+        describe('File Download', function () {
+            it('Can download files from URL', function (done) {
+                var browser = new Revenant();
+                const FILE_URL = 'http://jiahaog.github.io/ajax-test-page/public/exampleFile.pdf';
+                browser
+                    .openPage(AJAX_URL)
+                    .then(function () {
+                        return browser.downloadFromUrl(FILE_URL);
+                    })
+                    .then(function (downloaded) {
+                        request(
+                            {url: FILE_URL, encoding: null},
+                            function (error, response, correctFile) {
+                                if (error) {
+                                    browser.done();
+                                    done(error);
+                                    return
+                                }
+                                assert.equal(downloaded.toString(), correctFile.toString(), 'The downloaded file should be equal to the correct file');
+                                browser.done();
+                                done();
+                            }
+                        );
+                    })
+                    .catch(function (error) {
                         browser.done();
-                        done();
+                        done(error);
                     });
-                })
-                .catch(function (error) {
-                    browser.done();
-                    done(error);
-                });
+            });
+
+            it('Can download files from clicking an element', function (done) {
+                var browser = new Revenant();
+                const SELECTOR = '#download-link';
+                const CORRECT_FILE_URL = 'http://jiahaog.github.io/ajax-test-page/public/exampleFile.pdf';
+                browser
+                    .openPage(AJAX_URL)
+                    .then(function () {
+                        return browser.downloadFromClick(SELECTOR);
+                    })
+                    .then(function (downloaded) {
+                        request(
+                            {url: CORRECT_FILE_URL, encoding: null},
+                            function (error, response, correctFile) {
+                                if (error) {
+                                    browser.done();
+                                    done(error);
+                                    return
+                                }
+                                assert.equal(downloaded.toString(), correctFile.toString(), 'The downloaded file should be equal to the correct file');
+                                browser.done();
+                                done();
+                            }
+                        );
+                    })
+                    .catch(function (error) {
+                        browser.done();
+                        done(error);
+                    });
+            });
         });
+
     });
 
     describe('Graceful failures', function () {
