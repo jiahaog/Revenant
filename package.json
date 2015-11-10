@@ -8,25 +8,25 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/skewedlines/Revenant.git"
+    "url": "git+https://github.com/jiahaog/Revenant.git"
   },
   "author": "Jia Hao",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/skewedlines/Revenant/issues"
+    "url": "https://github.com/jiahaog/Revenant/issues"
   },
-  "homepage": "https://github.com/skewedlines/Revenant#readme",
+  "homepage": "https://github.com/jiahaog/Revenant#readme",
   "dependencies": {
     "async": "^1.4.2",
     "bluebird": "^3.0.5",
     "chance": "^0.7.6",
     "phantom": "^0.8.3",
+    "request": "^2.65.0",
     "sift-string": "0.0.2"
   },
   "devDependencies": {
     "chai": "^3.2.0",
     "mocha": "^2.2.5",
-    "request": "^2.65.0",
     "valid-url": "^1.0.9"
   },
   "directories": {

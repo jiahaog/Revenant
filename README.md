@@ -232,14 +232,23 @@ Submits the form on the page.
 
 - `callback(error)` – *Optional* `function` Callback called when the form has been submitted, the page has reached a new url, and the document is ready
 
-### downloadFile(selector, [callback])
+### downloadFromUrl(url, [callback])
 
-Downloads a file behind a hyperlink to a string.
+Downloads a file at a URL, using the current cookies as credentials for the http request.
 
 **Arguments**
 
-- `selector` - `string` Selector for a hyperlink that links to a file to be downloaded
-- `callback(error, file)` – *Optional* `function` Callback called after the file has been downloaded
+- `url` - `string` URL to the desired file
+- `callback(error, file)` – *Optional* `function` Callback called after the file has been downloaded. `file` is the retrieved data in bytes
+
+### downloadFromClick(selector, [callback])
+
+Clicks an element on the page and downloads the file behind the element
+
+**Arguments**
+
+- `selector` - `string` Selector for the element
+- `callback(error, file)` – *Optional* `function` Callback called after the file has been downloaded. `file` is the retrieved data in bytes
 
 
 
