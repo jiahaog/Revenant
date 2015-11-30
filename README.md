@@ -64,7 +64,7 @@ $ npm install --save revenant
 Example code to open a browser, wait for an element to appear on the page, and then logs its innerHTML to the console.
 
 ```javascript
-var Revenant = require('revenant');
+const Revenant = require('revenant');
 
 // example AJAX test page
 const URL = 'http://jiahaog.github.io/ajax-test-page/';
@@ -73,7 +73,7 @@ const URL = 'http://jiahaog.github.io/ajax-test-page/';
 const SELECTOR = '#setTimeoutContent';
 
 // create a browser
-var browser = new Revenant();
+const browser = new Revenant();
 
 browser
     .openPage(URL)
@@ -106,7 +106,7 @@ All API functions return a promise, and if desired, they can be used to chain ca
 **Example**
 
 ```javascript
-var browser = new Revenant();
+const browser = new Revenant();
 
 browser
 	.openPage(URL)
