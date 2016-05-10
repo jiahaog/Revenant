@@ -5,7 +5,7 @@
 var Revenant = require('revenant');
 
 // example AJAX test page
-const URL = 'http://skewedlines.github.io/ajax-test-page/';
+const URL = 'http://jiahaog.com/ajax-test-page/';
 
 // selector for AJAX content
 const SELECTOR = '#setTimeoutContent';
